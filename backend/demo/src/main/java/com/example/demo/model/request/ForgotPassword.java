@@ -8,6 +8,6 @@ import lombok.Data;
 public class ForgotPassword {
     @Email(message = "Email không hợp lệ", regexp ="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
-    @NotBlank(message = "email là bắt buộc.")
+    @NotBlank(message = "Email là bắt buộc.")
     private String email;
 }

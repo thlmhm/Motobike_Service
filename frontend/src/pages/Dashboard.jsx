@@ -2,7 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import Container from "../components/styled/Container";
 import { Card, Col, Row, Typography } from "antd";
-import { FileDoneOutlined, InboxOutlined, TeamOutlined, ToolOutlined } from "@ant-design/icons";
+import {
+  FileDoneOutlined,
+  InboxOutlined,
+  TeamOutlined,
+  ToolOutlined,
+} from "@ant-design/icons";
 import CardCount from "../components/CardCount";
 import TableTop5Product from "../components/table/TableTop5Product";
 import TableTop5Service from "../components/table/TableTop5Service";
@@ -28,7 +33,12 @@ const { Title } = Typography;
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState({ customer: 0, product: 0, service: 0, order: 0 });
+  const [count, setCount] = useState({
+    customer: 0,
+    product: 0,
+    service: 0,
+    order: 0,
+  });
   const [lowProducts, setLowProducts] = useState([]);
   const [outProducts, setOutProducts] = useState([]);
   const [topProducts, setTopProducts] = useState([]);
@@ -52,12 +62,29 @@ const Dashboard = () => {
       customerAPI.getAll({ pageSize: 1, pageNumber: 1 }),
       productAPI.getAll({ pageSize: 1000, pageNumber: 1 }),
       serviceAPI.getAll({ pageSize: 1, pageNumber: 1 }),
-      orderAPI.getAll({ pageSize: 1, pageNumber: 1, type: "INVOICE", ...timeParams }),
+      orderAPI.getAll({
+        pageSize: 1,
+        pageNumber: 1,
+        type: "INVOICE",
+        ...timeParams,
+      }),
       statisticAPI.getTopProductStatistic(timeParams),
       statisticAPI.getTopServiceStatistic(timeParams),
-      statisticAPI.getProductInStatistic({ pageSize: 1000, pageNumber: 1, ...timeParams }),
-      statisticAPI.getProductOutStatistic({ pageSize: 1000, pageNumber: 1, ...timeParams }),
-      statisticAPI.getServiceStatistic({ pageSize: 1000, pageNumber: 1, ...timeParams }),
+      statisticAPI.getProductInStatistic({
+        pageSize: 1000,
+        pageNumber: 1,
+        ...timeParams,
+      }),
+      statisticAPI.getProductOutStatistic({
+        pageSize: 1000,
+        pageNumber: 1,
+        ...timeParams,
+      }),
+      statisticAPI.getServiceStatistic({
+        pageSize: 1000,
+        pageNumber: 1,
+        ...timeParams,
+      }),
       statisticAPI.getProductInYearStatistic(),
       statisticAPI.getProductOutYearStatistic(),
       statisticAPI.getServiceYearStatistic(),
@@ -97,22 +124,47 @@ const Dashboard = () => {
             order: orders?.totalElements || 0,
           });
 
-          let lowStock = products?.content?.filter((prod) => prod.status === "LOW_STOCK");
-          lowStock = _.chunk(lowStock, 3)[0]?.map((p, i) => ({ ...p, top: i + 1 }));
+          let lowStock = products?.content?.filter(
+            (prod) => prod.status === "LOW_STOCK"
+          );
+          lowStock = _.chunk(lowStock, 3)[0]?.map((p, i) => ({
+            ...p,
+            top: i + 1,
+          }));
           setLowProducts(lowStock);
 
-          let outStock = products?.content?.filter((prod) => prod.status === "OUT_STOCK");
-          outStock = _.chunk(outStock, 3)[0]?.map((p, i) => ({ ...p, top: i + 1 }));
+          let outStock = products?.content?.filter(
+            (prod) => prod.status === "OUT_STOCK"
+          );
+          outStock = _.chunk(outStock, 3)[0]?.map((p, i) => ({
+            ...p,
+            top: i + 1,
+          }));
           setOutProducts(outStock);
 
-          let top5Products = _.chunk(topProducts, 5)[0]?.map((p, i) => ({ ...p, top: i + 1 }));
-          let top5Services = _.chunk(topServices, 5)[0]?.map((s, i) => ({ ...s, top: i + 1 }));
+          let top5Products = _.chunk(topProducts, 5)[0]?.map((p, i) => ({
+            ...p,
+            top: i + 1,
+          }));
+          let top5Services = _.chunk(topServices, 5)[0]?.map((s, i) => ({
+            ...s,
+            top: i + 1,
+          }));
           setTopProducts(top5Products);
           setTopServices(top5Services);
 
-          let totalProductsIn = productsIn.reduce((sum, p) => (sum += p.quantity * p.price), 0);
-          let totalProductsOut = productsOut.reduce((sum, p) => (sum += p.quantity * p.price), 0);
-          let totalServices = servicesStats.reduce((sum, s) => (sum += s.quantity * s.price), 0);
+          let totalProductsIn = productsIn.reduce(
+            (sum, p) => (sum += p.quantity * p.price),
+            0
+          );
+          let totalProductsOut = productsOut.reduce(
+            (sum, p) => (sum += p.quantity * p.price),
+            0
+          );
+          let totalServices = servicesStats.reduce(
+            (sum, s) => (sum += s.quantity * s.price),
+            0
+          );
           setTotalPriceProductsIn(totalProductsIn);
           setTotalPriceProductsOut(totalProductsOut);
           setTotalPriceServices(totalServices);
@@ -141,7 +193,10 @@ const Dashboard = () => {
           const incomesYear = servicesYear.map((s, i) => ({
             ...s,
             name: "Lợi nhuận",
-            expense: s.expense + productsOutYear[i].expense - productsInYear[i].expense,
+            expense:
+              s.expense +
+              productsOutYear[i].expense -
+              productsInYear[i].expense,
           }));
 
           setProductsInOutYear([...productsInYear, ...productsOutYear]);
@@ -164,8 +219,8 @@ const Dashboard = () => {
           <Card
             title={
               <InfoPopover label="Tổng quan kinh doanh">
-                Thống kê hiện tại được tính theo 30 ngày gần nhất. Chúng tôi sẽ cập nhật thêm các bộ lọc chi tiết hơn
-                trong tương lai
+                Thống kê hiện tại được tính theo 30 ngày gần nhất. Chúng tôi sẽ
+                cập nhật thêm các bộ lọc chi tiết hơn trong tương lai
               </InfoPopover>
             }
             bordered={false}
@@ -185,12 +240,18 @@ const Dashboard = () => {
               </Col>
               <Col xs={8} lg={5}>
                 <div>Doanh thu</div>
-                <Title level={4}>{moneyRenderer(totalPriceServices + totalPriceProductsOut)}</Title>
+                <Title level={4}>
+                  {moneyRenderer(totalPriceServices + totalPriceProductsOut)}
+                </Title>
               </Col>
               <Col xs={16} lg={4}>
                 <div>Lợi nhuận</div>
                 <Title level={4}>
-                  {moneyRenderer(totalPriceServices + totalPriceProductsOut - totalPriceProductsIn)}
+                  {moneyRenderer(
+                    totalPriceServices +
+                      totalPriceProductsOut -
+                      totalPriceProductsIn
+                  )}
                 </Title>
               </Col>
             </Row>
@@ -199,16 +260,36 @@ const Dashboard = () => {
         <Col span={24}>
           <Row gutter={[12, 12]}>
             <Col xs={12} lg={6}>
-              <CardCount icon={<TeamOutlined />} title="Khách hàng" count={count.customer} color="#0F83FF" />
+              <CardCount
+                icon={<TeamOutlined />}
+                title="Khách hàng"
+                count={count.customer}
+                color="#0F83FF"
+              />
             </Col>
             <Col xs={12} lg={6}>
-              <CardCount icon={<InboxOutlined />} title="Sản phẩm" count={count.product} color="#00C2FE" />
+              <CardCount
+                icon={<InboxOutlined />}
+                title="Sản phẩm"
+                count={count.product}
+                color="#00C2FE"
+              />
             </Col>
             <Col xs={12} lg={6}>
-              <CardCount icon={<ToolOutlined />} title="Dịch vụ" count={count.service} color="#7D48F4" />
+              <CardCount
+                icon={<ToolOutlined />}
+                title="Dịch vụ"
+                count={count.service}
+                color="#7D48F4"
+              />
             </Col>
             <Col xs={12} lg={6}>
-              <CardCount icon={<FileDoneOutlined />} title="Hóa đơn" count={count.order} color="#F4628D" />
+              <CardCount
+                icon={<FileDoneOutlined />}
+                title="Hóa đơn"
+                count={count.order}
+                color="#F4628D"
+              />
             </Col>
           </Row>
         </Col>

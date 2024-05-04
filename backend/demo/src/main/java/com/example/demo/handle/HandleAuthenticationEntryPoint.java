@@ -20,7 +20,7 @@ import java.io.OutputStream;
 public class HandleAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        log.warn("authentication failed");
+        log.warn("Authentication Failed");
         RestError restError = new RestError();
         if(request.getAttribute("tokenError") != null || request.getAttribute("userNotFoundByEmail") != null) {
             restError.setStatusCode(HttpStatus.UNAUTHORIZED.toString());
@@ -31,11 +31,11 @@ public class HandleAuthenticationEntryPoint implements AuthenticationEntryPoint 
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             restError.setMessage("Phải xác thực bằng mã thông báo!");
         }
-//        else if (request.getRequestURI().equals("/error")) {
-//            restError.setStatusCode(HttpStatus.NOT_FOUND.toString());
-//            response.setStatus(HttpStatus.NOT_FOUND.value());
-//            restError.setMessage("Request không hỗ trợ .");
-//        }
+        else if (request.getRequestURI().equals("/error")) {
+           restError.setStatusCode(HttpStatus.NOT_FOUND.toString());
+           response.setStatus(HttpStatus.NOT_FOUND.value());
+           restError.setMessage("Request không hỗ trợ .");
+       }
         else {
             restError.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.toString());
             restError.setStatusCode("INTERNAL_SERVER_ERROR");

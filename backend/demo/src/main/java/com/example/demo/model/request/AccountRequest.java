@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class AccountRequest {
 
-    @NotBlank(message = "tên người dùng là bắt buộc.")
+    @NotBlank(message = "Tên người dùng là bắt buộc.")
     private String username;
 
     @Email(message = "Email không hợp lệ", regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
@@ -19,10 +19,10 @@ public class AccountRequest {
     private String email;
 
     // @NotBlank(message = "password is mandatory.")
-    @Size(min = 4, max = 10, message = "độ dài mật khẩu lớn hơn 4 và nhỏ hơn 10.")
+    @Size(min = 4, max = 10, message = "Độ dài mật khẩu lớn hơn 4 và nhỏ hơn 10.")
     private String password;
 
-    @NotBlank(message = "vai trò là bắt buộc.")
+    @NotBlank(message = "Vai trò là bắt buộc.")
     @Author
     private String role;
 

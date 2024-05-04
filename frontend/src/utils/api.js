@@ -10,7 +10,12 @@ export const paramsToStr = (params) => {
   return "?" + queryString.stringify(params);
 };
 
-export const generateApi = (method = "get", endpoint, params = {}, data = {}) => {
+export const generateApi = (
+  method = "get",
+  endpoint,
+  params = {},
+  data = {}
+) => {
   const strParams = paramsToStr(params);
   const strData = JSON.stringify(data);
   const apiUrl = `${endpoint}${strParams}`;

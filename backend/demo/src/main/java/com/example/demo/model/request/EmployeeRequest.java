@@ -14,8 +14,8 @@ public class EmployeeRequest {
     @NotBlank(message = "Tên là bắt buộc.")
     private String name;
 
-    @NotBlank(message = "điện thoại là bắt buộc.")
-    @Size(min = 10, max = 10, message = "số điện thoại phải có 10 chữ số.")
+    @NotBlank(message = "Điện thoại là bắt buộc.")
+    @Size(min = 10, max = 10, message = "Số điện thoại phải có 10 chữ số.")
     private String phone;
 
     @Email(message = "Email không hợp lệ", regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"

@@ -102,7 +102,7 @@ public class OrderImplService implements OrderService {
         orderProductsRepository.saveAll(products);
         return BaseResponse.builder()
                 .statusCode(HttpStatus.CREATED.value())
-                .message("tạo đơn hàng thành công.")
+                .message("Tạo đơn hàng thành công.")
                 .data(this.entityToResponse(orderSaved, orderServiceEntities, products))
                 .build();
     }

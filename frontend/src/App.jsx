@@ -70,7 +70,10 @@ function App() {
 
             <Route path="/customers" element={<ListCustomer />} />
             <Route path="/customers/add" element={<AddCustomer />} />
-            <Route path="/customers/edit/:customerId" element={<EditCustomer />} />
+            <Route
+              path="/customers/edit/:customerId"
+              element={<EditCustomer />}
+            />
 
             <Route path="/orders" element={<ListOrder />} />
             <Route path="/orders/add" element={<AddOrder />} />
@@ -82,21 +85,39 @@ function App() {
 
             {role === "MANAGER" && (
               <>
-                <Route path="/statistics/services-income" element={<ServiceStatistic />} />
-                <Route path="/statistics/products-income" element={<ProductStatistic />} />
+                <Route
+                  path="/statistics/services-income"
+                  element={<ServiceStatistic />}
+                />
+                <Route
+                  path="/statistics/products-income"
+                  element={<ProductStatistic />}
+                />
 
                 <Route path="/services/add" element={<AddService />} />
-                <Route path="/services/edit/:serviceId" element={<EditService />} />
+                <Route
+                  path="/services/edit/:serviceId"
+                  element={<EditService />}
+                />
 
                 <Route path="/employees/add" element={<AddEmployee />} />
-                <Route path="/employees/edit/:employeeId" element={<EditEmployee />} />
+                <Route
+                  path="/employees/edit/:employeeId"
+                  element={<EditEmployee />}
+                />
 
                 <Route path="/accounts" element={<ListAccount />} />
                 <Route path="/accounts/add" element={<AddAccount />} />
-                <Route path="/accounts/edit/:accountId" element={<EditAccount />} />
+                <Route
+                  path="/accounts/edit/:accountId"
+                  element={<EditAccount />}
+                />
 
                 <Route path="/products/add" element={<AddProduct />} />
-                <Route path="/products/edit/:productId" element={<EditProduct />} />
+                <Route
+                  path="/products/edit/:productId"
+                  element={<EditProduct />}
+                />
 
                 <Route path="/stock-in" element={<ImportProduct />} />
                 <Route path="/stock-out" element={<ExportProduct />} />
