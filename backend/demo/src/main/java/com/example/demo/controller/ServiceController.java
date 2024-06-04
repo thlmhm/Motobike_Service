@@ -42,7 +42,7 @@ public class ServiceController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @PreAuthorize("hasAuthority('MANAGER')")
+    @PreAuthorize("hasAnyAuthority('MANAGER','DISPATCHER')")
     @PutMapping("/{serviceId}")
     public ResponseEntity<BaseResponse> update(@Valid @RequestBody ServiceRequest serviceRequest,
                                                @PathVariable long serviceId) {

@@ -33,7 +33,8 @@ const FormWrapper = styled.div`
   z-index: 5;
 
   @media (min-width: 576px) {
-    transform: ${({ action }) => (action === "login" ? "translateX(0)" : "translateX(calc(100% + 2rem))")};
+    transform: ${({ action }) =>
+      action === "login" ? "translateX(0)" : "translateX(calc(100% + 2rem))"};
     transition: transform 0.5s;
   }
 `;
@@ -57,11 +58,11 @@ const Auth = () => {
   const navigate = useNavigate();
   const { action = "login" } = useParams();
 
-  const [hide, setHide] = useState(true);
+  const [hide, setHide] = useState(1);
   const [verifyForm, setVerifyForm] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setHide(false), 500);
+    const timer = setTimeout(() => setHide(0), 500);
 
     return () => {
       clearTimeout(timer);
@@ -86,13 +87,19 @@ const Auth = () => {
           {action === "forgot-password" && !verifyForm && (
             <>
               <Title level={2}>Quên mật khẩu</Title>
-              <FormForgotPassword navigator={loginNavigator} showVerifyForm={showVerifyForm} />
+              <FormForgotPassword
+                navigator={loginNavigator}
+                showVerifyForm={showVerifyForm}
+              />
             </>
           )}
           {action === "forgot-password" && verifyForm && (
             <>
               <Title level={2}>Nhập mã xác thực</Title>
-              <FormVerifyCode navigator={loginNavigator} hideVerifyForm={hideVerifyForm} />
+              <FormVerifyCode
+                navigator={loginNavigator}
+                hideVerifyForm={hideVerifyForm}
+              />
             </>
           )}
         </FormWrapper>

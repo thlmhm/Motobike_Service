@@ -30,7 +30,8 @@ const ListCustomer = () => {
   const [pagination, setPagination] = useState({
     size: "default",
     hideOnSinglePage: true,
-    showTotal: (total, range) => `Hiển thị ${range[0]} - ${range[1]} trên tổng số ${total}`,
+    showTotal: (total, range) =>
+      `Hiển thị ${range[0]} - ${range[1]} trên tổng số ${total}`,
     responsive: true,
     showLessItem: true,
   });
@@ -41,7 +42,9 @@ const ListCustomer = () => {
       defaultFilteredValue: params.name ? [params.name] : null,
       title: "Khách hàng",
       dataIndex: "name",
-      render: (name, record) => <Link to={`/customers/edit/${record?.id}`}>{name}</Link>,
+      render: (name, record) => (
+        <Link to={`/customers/edit/${record?.id}`}>{name}</Link>
+      ),
     },
     {
       ...useTableSearch("code", params.code),
@@ -73,7 +76,12 @@ const ListCustomer = () => {
       align: "right",
       render: (_, record) => (
         <Space size="middle">
-          <Button type="link" danger size="large" onClick={() => deleteCustomer(record.id)}>
+          <Button
+            type="link"
+            danger
+            size="large"
+            onClick={() => deleteCustomer(record.id)}
+          >
             <DeleteOutlined />
           </Button>
         </Space>
@@ -94,7 +102,7 @@ const ListCustomer = () => {
       customerAPI.getAll({
         ...params,
         pageNumber: params.pageNumber || 1,
-        pageSize: params.pageSize || 5,
+        pageSize: params.pageSize || 10,
       }),
       (data) => {
         setDataSource(data.data.content);
@@ -144,7 +152,11 @@ const ListCustomer = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         apiCaller(customerAPI.deleteById(id), () => {
-          AntdSwal.fire("Thành công", "Bạn đã xóa khách hàng thành công", "success");
+          AntdSwal.fire(
+            "Thành công",
+            "Bạn đã xóa khách hàng thành công",
+            "success"
+          );
           navigate(`/customers?key=${!key}`);
         });
       }
@@ -194,7 +206,9 @@ const ListCustomer = () => {
         pagination={pagination}
         loading={loading}
         expandable={{
-          expandedRowRender: (record) => <TableRowExpand record={record} labels={labels} />,
+          expandedRowRender: (record) => (
+            <TableRowExpand record={record} labels={labels} />
+          ),
         }}
         scroll={{
           x: 576,

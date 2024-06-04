@@ -59,8 +59,6 @@ function App() {
       {isLoggedIn && (
         <AppLayout>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-
             <Route path="/invoices" element={<ListInvoice />} />
             <Route path="/invoices/:invoiceId" element={<DetailInvoice />} />
 
@@ -82,9 +80,10 @@ function App() {
             <Route path="/stock-history" element={<HistoryProduct />} />
             <Route path="/settings" element={<SettingStore />} />
             <Route path="*" element={<NotFound />} />
-
+            <Route path="/services/edit/:serviceId" element={<EditService />} />
             {role === "MANAGER" && (
               <>
+                <Route path="/" element={<Dashboard />} />
                 <Route
                   path="/statistics/services-income"
                   element={<ServiceStatistic />}

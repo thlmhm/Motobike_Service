@@ -13,7 +13,7 @@ import {
 import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import { useContext, useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { IcLogo, IcLogoSm } from "../components/Icon";
 import AuthContext from "../context/AuthContext";
@@ -29,19 +29,62 @@ const keyToItem = (key, routes) => {
 
 const routesManager = [
   { key: "1", label: "Tổng quan", pathname: "/", icon: <HomeOutlined /> },
-  { key: "2", label: "Doanh thu từ dịch vụ", pathname: "/statistics/services-income" },
-  { key: "3", label: "Doanh thu từ linh kiện", pathname: "/statistics/products-income" },
-  { key: "4", label: "Phiếu sửa chữa", pathname: "/orders", icon: <FileTextOutlined /> },
-  { key: "5", label: "Hóa đơn", pathname: "/invoices", icon: <FileDoneOutlined /> },
-  { key: "6", label: "Dịch vụ sửa chữa", pathname: "/services", icon: <ToolOutlined /> },
-  { key: "7", label: "Nhân viên", pathname: "/employees", icon: <UserOutlined /> },
-  { key: "8", label: "Khách hàng", pathname: "/customers", icon: <TeamOutlined /> },
-  { key: "9", label: "Tài khoản", pathname: "/accounts", icon: <UserAddOutlined /> },
+  {
+    key: "2",
+    label: "Doanh thu từ dịch vụ",
+    pathname: "/statistics/services-income",
+  },
+  {
+    key: "3",
+    label: "Doanh thu từ linh kiện",
+    pathname: "/statistics/products-income",
+  },
+  {
+    key: "4",
+    label: "Phiếu sửa chữa",
+    pathname: "/orders",
+    icon: <FileTextOutlined />,
+  },
+  {
+    key: "5",
+    label: "Hóa đơn",
+    pathname: "/invoices",
+    icon: <FileDoneOutlined />,
+  },
+  {
+    key: "6",
+    label: "Dịch vụ sửa chữa",
+    pathname: "/services",
+    icon: <ToolOutlined />,
+  },
+  {
+    key: "7",
+    label: "Nhân viên",
+    pathname: "/employees",
+    icon: <UserOutlined />,
+  },
+  {
+    key: "8",
+    label: "Khách hàng",
+    pathname: "/customers",
+    icon: <TeamOutlined />,
+  },
+  {
+    key: "9",
+    label: "Tài khoản",
+    pathname: "/accounts",
+    icon: <UserAddOutlined />,
+  },
   { key: "10", label: "Danh sách linh kiện", pathname: "/products" },
   { key: "11", label: "Nhập kho", pathname: "/stock-in" },
   { key: "12", label: "Xuất kho", pathname: "/stock-out" },
   { key: "13", label: "Lịch sử kho", pathname: "/stock-history" },
-  { key: "14", label: "Cài đặt", pathname: "/settings", icon: <SettingOutlined /> },
+  {
+    key: "14",
+    label: "Cài đặt",
+    pathname: "/settings",
+    icon: <SettingOutlined />,
+  },
 ];
 
 const itemsManager = [
@@ -73,28 +116,56 @@ const itemsManager = [
 ];
 
 const routesDispatcher = [
-  { key: "1", label: "Tổng quan", pathname: "/", icon: <HomeOutlined /> },
-  { key: "2", label: "Phiếu sửa chữa", pathname: "/orders", icon: <FileTextOutlined /> },
-  { key: "3", label: "Hóa đơn", pathname: "/invoices", icon: <FileDoneOutlined /> },
-  { key: "4", label: "Dịch vụ sửa chữa", pathname: "/services", icon: <ToolOutlined /> },
-  { key: "5", label: "Nhân viên", pathname: "/employees", icon: <UserOutlined /> },
-  { key: "6", label: "Khách hàng", pathname: "/customers", icon: <TeamOutlined /> },
-  { key: "7", label: "Danh sách linh kiện", pathname: "/products" },
-  { key: "8", label: "Lịch sử kho", pathname: "/stock-history" },
+  // { key: "1", label: "Tổng quan", pathname: "/", icon: <HomeOutlined /> },
+  {
+    key: "1",
+    label: "Phiếu sửa chữa",
+    pathname: "/orders",
+    icon: <FileTextOutlined />,
+  },
+  {
+    key: "2",
+    label: "Hóa đơn",
+    pathname: "/invoices",
+    icon: <FileDoneOutlined />,
+  },
+  {
+    key: "3",
+    label: "Dịch vụ sửa chữa",
+    pathname: "/services",
+    icon: <ToolOutlined />,
+  },
+  {
+    key: "4",
+    label: "Nhân viên",
+    pathname: "/employees",
+    icon: <UserOutlined />,
+  },
+  {
+    key: "5",
+    label: "Khách hàng",
+    pathname: "/customers",
+    icon: <TeamOutlined />,
+  },
+  { key: "6", label: "Danh sách linh kiện", pathname: "/products" },
+  { key: "7", label: "Lịch sử kho", pathname: "/stock-history" },
 ];
 
 const itemsDispatcher = [
+  // keyToItem("1", routesDispatcher),
   keyToItem("1", routesDispatcher),
   keyToItem("2", routesDispatcher),
   keyToItem("3", routesDispatcher),
   keyToItem("4", routesDispatcher),
   keyToItem("5", routesDispatcher),
-  keyToItem("6", routesDispatcher),
   {
     key: "sub2",
     label: "Kho linh kiện",
     icon: <InboxOutlined />,
-    children: [keyToItem("7", routesDispatcher), keyToItem("8", routesDispatcher)],
+    children: [
+      keyToItem("6", routesDispatcher),
+      keyToItem("7", routesDispatcher),
+    ],
   },
 ];
 
@@ -124,7 +195,7 @@ const NavSider = styled(Sider)`
 const NavDrawer = () => {
   const { user } = useContext(AuthContext);
   const { pathname } = useLocation();
-
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [routes, setRoutes] = useState([]);
   const [items, setItems] = useState([]);
@@ -140,12 +211,15 @@ const NavDrawer = () => {
     if (role === "DISPATCHER") {
       setRoutes(routesDispatcher);
       setItems(itemsDispatcher);
+      navigate("/orders");
     }
   }, [user]);
-
+  //if (pathname === "/" && user?.role === "DISPATCHER") navigate("/orders");
   let activeKey = "1";
   if (pathname !== "/") {
-    const existedRoute = routes.find((r) => r.pathname !== "/" && pathname.includes(r.pathname));
+    const existedRoute = routes.find(
+      (r) => r.pathname !== "/" && pathname.includes(r.pathname)
+    );
     activeKey = existedRoute?.key;
   }
 
@@ -158,10 +232,16 @@ const NavDrawer = () => {
       breakpoint="xl"
     >
       <LogoWrapper collapsed={collapsed} to="/">
-        {collapsed && <IcLogoSm />}
-        {!collapsed && <IcLogo />}
+        {/* {collapsed && <IcLogoSm />}
+        {!collapsed && <IcLogo />} */}
       </LogoWrapper>
-      <Menu theme="dark" selectedKeys={[activeKey]} mode="inline" items={items} />;
+      <Menu
+        theme="dark"
+        selectedKeys={[activeKey]}
+        mode="inline"
+        items={items}
+      />
+      ;
     </NavSider>
   );
 };

@@ -129,9 +129,9 @@ public class OrderImplService implements OrderService {
                 });
         EmployeeEntity employeeDispatcher = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal()).getAccount().getEmployee();
-        if (employeeDispatcher == null) {
-            throw new BaseException("Không tìm thấy DispatcherId.");
-        }
+        // if (employeeDispatcher == null) {
+        //     throw new BaseException("Không tìm thấy DispatcherId.");
+        // }
         // if
         // (!employeeDispatcher.getType().toString().equalsIgnoreCase(TypeEmployee.DISPATCHER.toString()))
         // {
@@ -197,7 +197,7 @@ public class OrderImplService implements OrderService {
             order.setNote(insertOrder.getNote());
             order.setMotorbikeName(insertOrder.getMotorbikeName());
             order.setMotorbikeCode(insertOrder.getMotorbikeCode());
-            order.setDispatcher(employeeDispatcher);
+            // order.setDispatcher(employeeDispatcher);
             order.setRepairer(employeeRepairer);
             order.setCustomerEntity(customer);
             order.setModifyBy(((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
@@ -208,7 +208,7 @@ public class OrderImplService implements OrderService {
                     .note(insertOrder.getNote())
                     .motorbikeCode(insertOrder.getMotorbikeCode())
                     .motorbikeName(insertOrder.getMotorbikeName())
-                    .dispatcher(employeeDispatcher)
+                    // .dispatcher(employeeDispatcher)
                     .repairer(employeeRepairer)
                     .customerEntity(customer)
                     .build();
@@ -366,7 +366,7 @@ public class OrderImplService implements OrderService {
     private OrderResponse entityToResponse(OrderEntity order, List<OrderServiceEntity> orderServiceEntities,
             List<OrderProduct> orderProducts) {
         CustomerEntity customerEntity = order.getCustomerEntity();
-        EmployeeEntity employeeDispatcher = order.getDispatcher();
+        // EmployeeEntity employeeDispatcher = order.getDispatcher();
         EmployeeEntity employeeRepairer = order.getRepairer();
         StoreEntity storeEntity = storeRepository.findById(1L).get();
         return OrderResponse.builder()
@@ -393,15 +393,15 @@ public class OrderImplService implements OrderService {
                                 .motorbikeCode(order.getMotorbikeCode())
                                 .motorbikeName(order.getMotorbikeName())
                                 .build())
-                .infoDispatcher(
-                        InfoEmployee.builder()
-                                .id(employeeDispatcher.getId())
-                                .code(employeeDispatcher.getCode())
-                                .name(employeeDispatcher.getName())
-                                .phone(employeeDispatcher.getPhone())
-                                .email(employeeDispatcher.getEmail())
-                                .status(employeeDispatcher.getIsActive())
-                                .build())
+                // .infoDispatcher(
+                //         InfoEmployee.builder()
+                //                 .id(employeeDispatcher.getId())
+                //                 .code(employeeDispatcher.getCode())
+                //                 .name(employeeDispatcher.getName())
+                //                 .phone(employeeDispatcher.getPhone())
+                //                 .email(employeeDispatcher.getEmail())
+                //                 .status(employeeDispatcher.getIsActive())
+                //                 .build())
                 .infoRepairer(
                         InfoEmployee.builder()
                                 .id(employeeRepairer.getId())
