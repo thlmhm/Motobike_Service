@@ -21,9 +21,9 @@ public class OrderEntity extends BaseEntity {
     private String motorbikeCode;
     private String motorbikeName;
 
-    // @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    // @JoinColumn(name = "dispatcher_id")
-    // private EmployeeEntity dispatcher;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "dispatcher_id")
+    private EmployeeEntity dispatcher;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "repairer_id")
@@ -39,9 +39,9 @@ public class OrderEntity extends BaseEntity {
         code = CodeConstant.CODE_ORDER + idString;
     }
 
-    // public EmployeeEntity getDispatcher() {
-    //     return dispatcher;
-    // }
+    public EmployeeEntity getDispatcher() {
+        return dispatcher;
+    }
 
     public EmployeeEntity getRepairer() {
         return repairer;

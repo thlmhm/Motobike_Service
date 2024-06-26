@@ -36,7 +36,8 @@ const HistoryProduct = () => {
   const [pagination, setPagination] = useState({
     size: "default",
     hideOnSinglePage: true,
-    showTotal: (total, range) => `Hiển thị ${range[0]} - ${range[1]} trên tổng số ${total}`,
+    showTotal: (total, range) =>
+      `Hiển thị ${range[0]} - ${range[1]} trên tổng số ${total}`,
     responsive: true,
     showLessItem: true,
   });
@@ -46,7 +47,8 @@ const HistoryProduct = () => {
       title: "Thời gian",
       dataIndex: "createDate",
       render: dateTimeRenderer,
-      defaultSortOrder: params.sortBy === "createDate" ? params.sortOrder : null,
+      defaultSortOrder:
+        params.sortBy === "createDate" ? params.sortOrder : null,
       sortDirections: ["ascend", "descend", "ascend"],
       sorter: (_, __, sortOrder) => sortOrder === "ascend",
     },
@@ -71,7 +73,11 @@ const HistoryProduct = () => {
       dataIndex: "action",
       align: "center",
       render: (action) => (
-        <Tag color={action === "IMPORT" ? "#66B8FF" : "error"} key={action} style={{ borderRadius: 50 }}>
+        <Tag
+          color={action === "IMPORT" ? "#66B8FF" : "error"}
+          key={action}
+          style={{ borderRadius: 50 }}
+        >
           {historyActionRenderer(action)}
         </Tag>
       ),
@@ -87,7 +93,8 @@ const HistoryProduct = () => {
       title: "Thay đổi",
       dataIndex: "difference",
       align: "center",
-      defaultSortOrder: params.sortBy === "difference" ? params.sortOrder : null,
+      defaultSortOrder:
+        params.sortBy === "difference" ? params.sortOrder : null,
       sortDirections: ["ascend", "descend", "ascend"],
       sorter: (_, __, sortOrder) => sortOrder === "ascend",
       render: differentRenderer,
@@ -96,7 +103,8 @@ const HistoryProduct = () => {
       title: "Còn lại",
       dataIndex: "quantityLeft",
       align: "center",
-      defaultSortOrder: params.sortBy === "quantityLeft" ? params.sortOrder : null,
+      defaultSortOrder:
+        params.sortBy === "quantityLeft" ? params.sortOrder : null,
       sortDirections: ["ascend", "descend", "ascend"],
       sorter: (_, __, sortOrder) => sortOrder === "ascend",
       render: defaultRenderer,
@@ -116,7 +124,7 @@ const HistoryProduct = () => {
       productAPI.getHistory({
         ...params,
         pageNumber: params.pageNumber || 1,
-        pageSize: params.pageSize || 5,
+        pageSize: params.pageSize || 10,
       }),
       (data) => {
         setDataSource(data.data.content);
@@ -193,7 +201,9 @@ const HistoryProduct = () => {
         pagination={pagination}
         loading={loading}
         expandable={{
-          expandedRowRender: (record) => <TableRowExpand record={record} labels={labels} />,
+          expandedRowRender: (record) => (
+            <TableRowExpand record={record} labels={labels} />
+          ),
         }}
         scroll={{
           x: 576,

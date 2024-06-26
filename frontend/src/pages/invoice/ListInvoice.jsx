@@ -12,9 +12,21 @@ import { Excel } from "antd-table-saveas-excel";
 
 const labels = [
   { title: "Mã hóa đơn", dataIndex: "code", render: defaultRenderer },
-  { title: "Mã khách hàng", dataIndex: "customerCode", render: defaultRenderer },
-  { title: "Tên khách hàng", dataIndex: "customerName", render: defaultRenderer },
-  { title: "NV điều phối", dataIndex: "dispatcherName", render: defaultRenderer },
+  {
+    title: "Mã khách hàng",
+    dataIndex: "customerCode",
+    render: defaultRenderer,
+  },
+  {
+    title: "Tên khách hàng",
+    dataIndex: "customerName",
+    render: defaultRenderer,
+  },
+  {
+    title: "NV điều phối",
+    dataIndex: "dispatcherName",
+    render: defaultRenderer,
+  },
   { title: "NV sửa chữa", dataIndex: "repairerName", render: defaultRenderer },
   { title: "Biển số xe", dataIndex: "motorbikeCode", render: defaultRenderer },
   { title: "Thời gian tạo", dataIndex: "createDate", render: dateTimeRenderer },
@@ -30,7 +42,8 @@ const ListInvoice = () => {
   const [pagination, setPagination] = useState({
     size: "default",
     hideOnSinglePage: true,
-    showTotal: (total, range) => `Hiển thị ${range[0]} - ${range[1]} trên tổng số ${total}`,
+    showTotal: (total, range) =>
+      `Hiển thị ${range[0]} - ${range[1]} trên tổng số ${total}`,
     responsive: true,
     showLessItem: true,
   });
@@ -41,7 +54,9 @@ const ListInvoice = () => {
       defaultFilteredValue: params.code ? [params.code] : null,
       title: "Mã HĐ",
       dataIndex: "code",
-      render: (code, record) => <Link to={`/invoices/${record?.id}`}>{code}</Link>,
+      render: (code, record) => (
+        <Link to={`/invoices/${record?.id}`}>{code}</Link>
+      ),
     },
     {
       ...useTableSearch("customerCode", params.customerCode),
@@ -61,7 +76,9 @@ const ListInvoice = () => {
     },
     {
       ...useTableSearch("dispatcherName", params.dispatcherName),
-      defaultFilteredValue: params.dispatcherName ? [params.dispatcherName] : null,
+      defaultFilteredValue: params.dispatcherName
+        ? [params.dispatcherName]
+        : null,
       title: "NV điều phối",
       dataIndex: "dispatcherName",
       align: "center",
@@ -77,7 +94,9 @@ const ListInvoice = () => {
     },
     {
       ...useTableSearch("motorbikeCode", params.motorbikeCode),
-      defaultFilteredValue: params.motorbikeCode ? [params.motorbikeCode] : null,
+      defaultFilteredValue: params.motorbikeCode
+        ? [params.motorbikeCode]
+        : null,
       title: "Biển số xe",
       dataIndex: "motorbikeCode",
       align: "center",
@@ -88,7 +107,8 @@ const ListInvoice = () => {
       dataIndex: "createDate",
       align: "center",
       render: dateTimeRenderer,
-      defaultSortOrder: params.sortBy === "createDate" ? params.sortOrder : null,
+      defaultSortOrder:
+        params.sortBy === "createDate" ? params.sortOrder : null,
       sortDirections: ["ascend", "descend", "ascend"],
       sorter: (_, __, sortOrder) => sortOrder === "ascend",
     },
@@ -107,7 +127,7 @@ const ListInvoice = () => {
       orderAPI.getAll({
         ...params,
         pageNumber: params.pageNumber || 1,
-        pageSize: params.pageSize || 5,
+        pageSize: params.pageSize || 10,
         type: "INVOICE",
       }),
       (data) => {
@@ -189,7 +209,9 @@ const ListInvoice = () => {
         pagination={pagination}
         loading={loading}
         expandable={{
-          expandedRowRender: (record) => <TableRowExpand record={record} labels={labels} />,
+          expandedRowRender: (record) => (
+            <TableRowExpand record={record} labels={labels} />
+          ),
         }}
         scroll={{
           x: 576,

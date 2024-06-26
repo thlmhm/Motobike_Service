@@ -36,12 +36,14 @@ public class AccountController {
         BaseResponse response = accountService.deleteById(accountId);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
+
     @PreAuthorize("hasAuthority('MANAGER')")
     @GetMapping("/{accountId}")
     public ResponseEntity<BaseResponse> findById(@PathVariable long accountId) {
         BaseResponse response = accountService.getById(accountId);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
+
     @PreAuthorize("hasAuthority('MANAGER')")
     @GetMapping("")
     public ResponseEntity<BaseResponse> getAllAccount(
@@ -49,6 +51,7 @@ public class AccountController {
         BaseResponse response = accountService.getByParams(map);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
+
     @PreAuthorize("hasAuthority('MANAGER')")
     @GetMapping("/search")
     public ResponseEntity<BaseResponse> searchByManyConditions(

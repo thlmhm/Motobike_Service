@@ -44,13 +44,13 @@ public class OrderImplService implements OrderService {
     private final StoreRepository storeRepository;
 
     public OrderImplService(OrderRepository orderRepository,
-                            CustomerRepository customerRepository,
-                            EmployeeRepository employeeRepository,
-                            ServiceRepository serviceRepository,
-                            ProductRepository productRepository,
-                            OrderProductsRepository orderProductsRepository,
-                            OrderServiceRepository orderServiceRepository,
-                            HistoryProductService historyProductService, StoreRepository storeRepository) {
+            CustomerRepository customerRepository,
+            EmployeeRepository employeeRepository,
+            ServiceRepository serviceRepository,
+            ProductRepository productRepository,
+            OrderProductsRepository orderProductsRepository,
+            OrderServiceRepository orderServiceRepository,
+            HistoryProductService historyProductService, StoreRepository storeRepository) {
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.employeeRepository = employeeRepository;
@@ -129,14 +129,12 @@ public class OrderImplService implements OrderService {
                 });
         EmployeeEntity employeeDispatcher = ((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication()
                 .getPrincipal()).getAccount().getEmployee();
-        // if (employeeDispatcher == null) {
-        //     throw new BaseException("Không tìm thấy DispatcherId.");
-        // }
-        // if
-        // (!employeeDispatcher.getType().toString().equalsIgnoreCase(TypeEmployee.DISPATCHER.toString()))
-        // {
-        // throw new BaseException("Nhân viên điều phối không được phép.");
-        // }
+        if (employeeDispatcher == null) {
+            throw new BaseException("Không tìm thấy DispatcherId.");
+        }
+        if (!employeeDispatcher.getType().toString().equalsIgnoreCase(TypeEmployee.DISPATCHER.toString())) {
+            throw new BaseException("Nhân viên điều phối không được phép.");
+        }
         EmployeeEntity employeeRepairer = this.employeeRepository.getRepairerIsActive(insertOrder.getRepairerId())
                 .orElseThrow(() -> {
                     throw new BaseException(new StringBuilder("Không tìm thấy nhân viên theo id = ")
@@ -197,7 +195,7 @@ public class OrderImplService implements OrderService {
             order.setNote(insertOrder.getNote());
             order.setMotorbikeName(insertOrder.getMotorbikeName());
             order.setMotorbikeCode(insertOrder.getMotorbikeCode());
-            // order.setDispatcher(employeeDispatcher);
+            order.setDispatcher(employeeDispatcher);
             order.setRepairer(employeeRepairer);
             order.setCustomerEntity(customer);
             order.setModifyBy(((CustomUserDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
@@ -208,7 +206,7 @@ public class OrderImplService implements OrderService {
                     .note(insertOrder.getNote())
                     .motorbikeCode(insertOrder.getMotorbikeCode())
                     .motorbikeName(insertOrder.getMotorbikeName())
-                    // .dispatcher(employeeDispatcher)
+                    .dispatcher(employeeDispatcher)
                     .repairer(employeeRepairer)
                     .customerEntity(customer)
                     .build();
@@ -366,7 +364,7 @@ public class OrderImplService implements OrderService {
     private OrderResponse entityToResponse(OrderEntity order, List<OrderServiceEntity> orderServiceEntities,
             List<OrderProduct> orderProducts) {
         CustomerEntity customerEntity = order.getCustomerEntity();
-        // EmployeeEntity employeeDispatcher = order.getDispatcher();
+        EmployeeEntity employeeDispatcher = order.getDispatcher();
         EmployeeEntity employeeRepairer = order.getRepairer();
         StoreEntity storeEntity = storeRepository.findById(1L).get();
         return OrderResponse.builder()
@@ -380,8 +378,7 @@ public class OrderImplService implements OrderService {
                                 .address(storeEntity.getAddress())
                                 .email(storeEntity.getEmail())
                                 .vat(storeEntity.getVat())
-                                .build()
-                )
+                                .build())
                 .infoCustomer(
                         InfoCustomer.builder()
                                 .id(customerEntity.getId())
@@ -393,15 +390,15 @@ public class OrderImplService implements OrderService {
                                 .motorbikeCode(order.getMotorbikeCode())
                                 .motorbikeName(order.getMotorbikeName())
                                 .build())
-                // .infoDispatcher(
-                //         InfoEmployee.builder()
-                //                 .id(employeeDispatcher.getId())
-                //                 .code(employeeDispatcher.getCode())
-                //                 .name(employeeDispatcher.getName())
-                //                 .phone(employeeDispatcher.getPhone())
-                //                 .email(employeeDispatcher.getEmail())
-                //                 .status(employeeDispatcher.getIsActive())
-                //                 .build())
+                .infoDispatcher(
+                        InfoEmployee.builder()
+                                .id(employeeDispatcher.getId())
+                                .code(employeeDispatcher.getCode())
+                                .name(employeeDispatcher.getName())
+                                .phone(employeeDispatcher.getPhone())
+                                .email(employeeDispatcher.getEmail())
+                                .status(employeeDispatcher.getIsActive())
+                                .build())
                 .infoRepairer(
                         InfoEmployee.builder()
                                 .id(employeeRepairer.getId())

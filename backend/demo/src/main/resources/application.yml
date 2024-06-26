@@ -4,8 +4,6 @@ spring:
     port: 587
     # username: dungthemai20@gmail.com
     # password: tsotbcciabtdafqa
-    username: nsj301.onlineshop@gmail.com
-    password: lmqgjuqfherallww
     properties:
       mail:
         smtp:
