@@ -1,6 +1,6 @@
 "use strict";
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = "https://nhunghongmotor88.ddns.net";
 const TOKEN_KEY = "jwt_storage_key";
 const invoiceId = new URLSearchParams(window.location.search).get("invoiceId");
 
@@ -54,8 +54,12 @@ let totalPriceProduct = 0;
 const renderDateCode = (invoice) => {
   if (!invoice) return;
   infoDateCode.innerHTML = `
-  <div class="col-sm-6"><strong>Ngày:</strong> ${dateRenderer(invoice.modifiedDate)}</div>
-  <div class="col-sm-6 text-sm-end"><strong>Mã hóa đơn:</strong> ${invoice.code}</div>
+  <div class="col-sm-6"><strong>Ngày:</strong> ${dateRenderer(
+    invoice.modifiedDate
+  )}</div>
+  <div class="col-sm-6 text-sm-end"><strong>Mã hóa đơn:</strong> ${
+    invoice.code
+  }</div>
   `;
 };
 
@@ -132,7 +136,10 @@ const renderTableService = (invoice) => {
 
   const services = invoice.infoServices;
   if (services.length == 0) return;
-  const totalPrice = services.reduce((sum, s) => (sum += s.price * s.quantity), 0);
+  const totalPrice = services.reduce(
+    (sum, s) => (sum += s.price * s.quantity),
+    0
+  );
   totalPriceService = totalPrice;
 
   tableService.innerHTML = `
@@ -162,7 +169,10 @@ const renderTableProduct = (invoice) => {
 
   const products = invoice.infoProducts;
   if (products.length == 0) return;
-  const totalPrice = products.reduce((sum, s) => (sum += s.price * s.quantity), 0);
+  const totalPrice = products.reduce(
+    (sum, s) => (sum += s.price * s.quantity),
+    0
+  );
   totalPriceProduct = totalPrice;
 
   tableProduct.innerHTML = `
@@ -189,7 +199,9 @@ const renderTableProduct = (invoice) => {
 
 const renderTotalPrice = () => {
   infoTotalPrice.innerHTML = `
-  <b>Tổng thanh toán:</b> ${moneyRenderer(totalPriceService + totalPriceProduct)}
+  <b>Tổng thanh toán:</b> ${moneyRenderer(
+    totalPriceService + totalPriceProduct
+  )}
   `;
 };
 
