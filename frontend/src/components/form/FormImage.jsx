@@ -40,11 +40,7 @@ const FormImage = ({ imageUrl, setImageUrl }) => {
     if (token) config.headers.Authorization = "Bearer " + token;
     fmData.append("file", file);
     axios
-      .post(
-        "https://nhunghongmotor88.ddns.net/api/products/upload",
-        fmData,
-        config
-      )
+      .post("http://localhost:8080/api/products/upload", fmData, config)
       .then((res) => {
         setImageUrl(res?.data?.data?.url);
         setLoading(false);

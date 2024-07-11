@@ -1,6 +1,7 @@
 "use strict";
 
-const BASE_URL = "https://nhunghongmotor88.ddns.net";
+// const BASE_URL = "https://nhunghongmotor88.ddns.net";
+const BASE_URL = "http://localhost:8080";
 const TOKEN_KEY = "jwt_storage_key";
 const invoiceId = new URLSearchParams(window.location.search).get("invoiceId");
 
